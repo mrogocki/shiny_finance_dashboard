@@ -1,3 +1,3 @@
-account_data <- read_xlsx(REL_FILE) %>%
-  setDT() %>%
-  .[`Beguenstigter/Zahlungspflichtiger` != NAME]
+account_data <- load_clean_data(REL_FILE) #%>%
+
+ # .[`Beguenstigter/Zahlungspflichtiger` != NAME]

@@ -5,5 +5,11 @@ library(dplyr)
 library(data.table)
 library(shinydashboard)
 library(magrittr)
+library(purrr)
+library(janitor)
+library(fs)
 
+REL_FILE <- fs::path("2022", ext = "csv")
+
+source("utils.R")
 source("Load_data.R")
