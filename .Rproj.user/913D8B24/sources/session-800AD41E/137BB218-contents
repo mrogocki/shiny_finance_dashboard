@@ -1,0 +1,3 @@
+file_con <- file(REL_FILE, "r")
+
+file_con
