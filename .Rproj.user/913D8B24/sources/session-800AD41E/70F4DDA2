@@ -3,7 +3,7 @@
     "path": "~/GitHub/shiny_finance_dashboard/Load_data.R",
     "project_path": "Load_data.R",
     "type": "r_source",
-    "hash": "0",
+    "hash": "942846389",
     "contents": "",
     "dirty": false,
     "created": 1664390350263.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "2,1",
+        "cursorPosition": "6,88",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1664392184,
+    "lastKnownWriteTime": 1664439038,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1664392184303,
+    "last_content_update": 1664439038709,
     "read_only": false,
     "read_only_alternatives": []
 }

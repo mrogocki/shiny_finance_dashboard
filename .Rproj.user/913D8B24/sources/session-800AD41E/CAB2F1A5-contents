@@ -3,11 +3,12 @@ library(readxl)
 library(ggplot2)
 library(dplyr)
 library(data.table)
-library(shinydashboard)
+library(bs4Dash)
 library(magrittr)
 library(purrr)
 library(janitor)
 library(fs)
+library(plotly)
 
 REL_FILE <- fs::path("2022", ext = "csv")
 

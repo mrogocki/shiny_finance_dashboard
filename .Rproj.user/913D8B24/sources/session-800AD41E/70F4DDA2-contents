@@ -1,0 +1,12 @@
+account_data <- load_clean_data(REL_FILE)
+
+account_data <- account_data[!(BEGUENSTIGTER_ZAHLUNGSPFLICHTIGER %in% c("Michael Jan Rogocki", "Anna Rogocka",
+                                                                        "Bank11 fur Privatkunden und Hand el GmbH",
+                                                                        "Autowelt Rostock GmbH",
+                                                                         "MICHAEL JAN ROGOCKI",
+                                                                        "Michael Rogocki"))]
+
+
+account_data[, BUCHUNGSTAG := lubridate::dmy(BUCHUNGSTAG)]
+account_data[, BETRAG := stringr::str_replace_all(BETRAG, ",", ".")]
+account_data[, BETRAG := as.double(BETRAG)]

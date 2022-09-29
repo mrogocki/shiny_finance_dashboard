@@ -6,10 +6,10 @@ ui_wykres <- tabItem(
          h4("Ustaw okres czasu ktory cie interesuje"),
          sliderInput("timeinput",
                      label = "Prosze wybrac",
-                     min = min(account_data$Buchungstag),
-                     max = max(account_data$Buchungstag),
+                     min = min(account_data$BUCHUNGSTAG),
+                     max = max(account_data$BUCHUNGSTAG),
                      step = 24,
-                     value = c(min(account_data$Buchungstag),max(account_data$Buchungstag)),
+                     value = c(min(account_data$BUCHUNGSTAG),max(account_data$BUCHUNGSTAG)),
                      width = "100%"),
          width = 12)),
   fluidRow(plotOutput("ts_data")),
@@ -35,14 +35,26 @@ ui_dane <- tabItem(
   )
 )
 
+ui_zrodlo <- tabItem(
+  tabName = "dane_zrodla",
+  fluidRow(
+    bs4Card(id = "zrodla_1",
+    plotlyOutput("zrodla_plot"),
+    width = 12,
+    solidHeader = TRUE)
+  )
+)
+
 ui_tabs <- tabItems(
   ui_wykres,
-  ui_dane
+  ui_dane,
+  ui_zrodlo
 )
 
 sideboard <- sidebarMenu(
   menuItem("Wykres", tabName = "wizualizacja"),
-  menuItem("Dane", tabName = "dane_tabela")
+  menuItem("Dane", tabName = "dane_tabela"),
+  menuItem("Zrodla", tabName = "dane_zrodla")
 )
 dashboardPage(
   dashboardHeader(title = "Planer finansowy"),
