@@ -1,5 +1,4 @@
 library(shiny)
-library(readxl)
 library(ggplot2)
 library(dplyr)
 library(data.table)
@@ -9,6 +8,9 @@ library(purrr)
 library(janitor)
 library(fs)
 library(plotly)
+library(DT)
+library(lubridate)
+library(forcats)
 
 REL_FILE <- fs::path("2022", ext = "csv")
 

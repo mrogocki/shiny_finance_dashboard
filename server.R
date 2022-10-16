@@ -2,6 +2,8 @@
 
 server <- function(input, output){
 
+  #TODO: Reavtive val month_data
+
   # Plots the time data
   output$ts_data <- renderPlot({
     ### Filter by date
@@ -68,4 +70,85 @@ server <- function(input, output){
              paper_bgcolor = "rgba(0, 0, 0, 0)",
              fig_bgcolor   = "rgba(0, 0, 0, 0)")
   })
+  
+  output$zrodla_miesieczne <- renderPlotly({
+    
+    account_data[, MONTH := months(BUCHUNGSTAG)]
+    
+    if (input$select_summarizing == "Wszystkie") {
+    
+      account_data_month <- account_data[, .(BETRAG = sum(BETRAG)),
+                                       by = "MONTH"]
+    
+    } else if (input$select_summarizing == "Negatywne") {
+      
+      account_data_month <- account_data[BETRAG < 0, .(BETRAG = sum(BETRAG)),
+                                         by = "MONTH"]
+      
+    } else if (input$select_summarizing == "Pozytywne") {
+      
+      account_data_month <- account_data[BETRAG > 0, .(BETRAG = sum(BETRAG)),
+                                         by = "MONTH"]
+    }
+    
+    levels <- c("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August",
+                "September", "Oktober", "November", "Dezember")
+    
+    account_data_month$MONTH <- factor(account_data_month$MONTH, levels)
+    
+    fig <- plot_ly(account_data_month,
+                   
+                   x = account_data_month$MONTH,
+                   
+                   y = account_data_month$BETRAG,
+                   
+                   name = "wedlug miesiecy",
+                   
+                   type = "bar",
+                   
+                   source = "miesiace"
+                   
+    ) %>%
+      layout(plot_bgcolor  = "rgba(0, 0, 0, 0)",
+             paper_bgcolor = "rgba(0, 0, 0, 0)",
+             fig_bgcolor   = "rgba(0, 0, 0, 0)") %>%
+      add_lines(data = account_data_month,
+                
+                x = account_data_month$MONTH,
+                
+                y = mean(account_data_month$BETRAG),
+              )
+    
+    
+  })
+  
+  myPlotEventData <- reactive({
+    event_data(
+      event = "plotly_click",
+      source = "miesiace")
+  })
+  
+  output$miesiaceTable <- DT::renderDataTable({
+    
+    account_data[, MONTH := months(BUCHUNGSTAG)]
+    
+    if (input$select_summarizing == "Wszystkie") {
+      
+      account_data <- account_data
+      
+      
+    } else if (input$select_summarizing == "Negatywne") {
+      
+      account_data <- account_data[BETRAG < 0]
+      
+    } else if (input$select_summarizing == "Pozytywne") {
+      
+      account_data <- account_data[BETRAG > 0]
+    }
+    
+    setorderv(account_data, "BETRAG")
+    
+    account_data[MONTH %in% myPlotEventData()$x[[1]], .(BUCHUNGSTAG, BUCHUNGSTEXT, VERWENDUNGSZWECK, BETRAG)]
+  })
+  
 }

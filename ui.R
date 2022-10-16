@@ -45,17 +45,34 @@ ui_zrodlo <- tabItem(
   )
 )
 
+ui_by_months <- tabItem(
+  tabName = "dane_month",
+  fluidRow(
+    bs4Card(id = "miesiace",
+            selectInput("select_summarizing",
+                        label = "Wybieraj obroty",
+                    choices = c("Wszystkie", "Negatywne", "Pozytywne")),
+            plotlyOutput("zrodla_miesieczne"),
+            DT::dataTableOutput("miesiaceTable"),
+            width = 12,
+            soldHeader = TRUE)
+  )
+)
+
 ui_tabs <- tabItems(
   ui_wykres,
   ui_dane,
-  ui_zrodlo
+  ui_zrodlo,
+  ui_by_months
 )
 
 sideboard <- sidebarMenu(
   menuItem("Wykres", tabName = "wizualizacja"),
   menuItem("Dane", tabName = "dane_tabela"),
-  menuItem("Zrodla", tabName = "dane_zrodla")
+  menuItem("Zrodla", tabName = "dane_zrodla"),
+  menuItem("Miesiace", tabName = "dane_month")
 )
+
 dashboardPage(
   dashboardHeader(title = "Planer finansowy"),
   dashboardSidebar(
